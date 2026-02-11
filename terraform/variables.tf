@@ -1,4 +1,4 @@
-### Terraform Variables for Contoso Web App Infrastructure
+### Terraform Variables for Azure Web App Infrastructure
 variable "location" {
   description = "Azure region"
   type        = string
@@ -53,3 +53,4 @@ variable "storage_replication" {
   description = "Storage account replication type (e.g. LRS, GRS)"
   type        = string
 }
+
