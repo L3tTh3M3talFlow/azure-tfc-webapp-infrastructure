@@ -1,10 +1,10 @@
 terraform {
-  required_version = "~> 1.6"
+  required_version = "~> 1.6" # Terraform client version
 
   cloud {
-    organization = "contosoazureorg"
+    organization = "your org name"
     workspaces {
-      name = "cds-dev-webapp-infra"
+      name = "your TFC workspace"
     }
   }
 
