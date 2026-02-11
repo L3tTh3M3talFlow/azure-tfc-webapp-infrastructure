@@ -1,0 +1,25 @@
+jobs:
+- deployment: Apply
+  displayName: terraform apply
+  environment: dev
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+
+        - task: TerraformInstaller@1
+          inputs:
+            terraformVersion: '1.6.6'
+
+        - script: terraform init
+          workingDirectory: terraform
+          displayName: Terraform Init
+          env:
+            TF_TOKEN_app_terraform_io: $(TFC_TOKEN)
+
+        - script: terraform apply -auto-approve -var-file=env/$(environment).tfvars
+          workingDirectory: terraform
+          displayName: Terraform Apply (requires approval)
+          env:
+            TF_TOKEN_app_terraform_io: $(TFC_TOKEN)

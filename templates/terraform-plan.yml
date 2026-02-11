@@ -1,0 +1,34 @@
+jobs:
+- job: Plan
+  displayName: terraform plan
+  steps:
+  - checkout: self
+
+  - task: TerraformInstaller@1
+    inputs:
+      terraformVersion: '1.6.6'
+    displayName: Terraform Client Installation
+
+  - script: |
+      if [ -z "$TF_TOKEN_app_terraform_io" ]; then
+        echo "TFC token is NOT set"
+        exit 1
+      else
+        echo "TFC token is set"
+      fi
+    env:
+      TF_TOKEN_app_terraform_io: $(TFC_TOKEN)
+    displayName: Check TFC Token
+
+  - script: terraform init
+    workingDirectory: terraform
+    displayName: Terraform Init
+    env:
+      TF_TOKEN_app_terraform_io: $(TFC_TOKEN)
+
+  - script: |
+      terraform plan -var-file=env/$(environment).tfvars
+    displayName: Terraform Plan
+    workingDirectory: terraform
+    env:
+      TF_TOKEN_app_terraform_io: $(TFC_TOKEN)
