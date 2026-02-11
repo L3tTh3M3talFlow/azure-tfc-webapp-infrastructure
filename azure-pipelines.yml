@@ -13,11 +13,11 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  - group: terraform-cloud
+  - group: your-terraform-cloud-name
   - name: TF_CLOUD_ORGANIZATION 
-    value: contosoazureorg
+    value: yourorg
   - name: TF_WORKSPACE
-    value: cds-dev-webapp-infra
+    value: your-tfc-workspace-name
 
 parameters:
 - name: runDestroy
@@ -50,3 +50,4 @@ stages:
   condition: and(succeeded(),eq(${{ parameters.runDestroy }}, true),eq(variables['Build.Reason'], 'Manual'))
   jobs:
   - template: templates/terraform-destroy.yml
+
